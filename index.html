@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Dev-Eater AI - Idle Game</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Верхняя панель -->
+        <header class="top-bar">
+            <div class="market-dominance">
+                <span>Market Dominance: </span>
+                <span id="marketDominance">0.00%</span>
+            </div>
+            <div class="ai-level">
+                <span>AI Level: </span>
+                <span id="aiLevelName">Script Bot</span>
+                <span class="level-number">(Lvl <span id="aiLevel">1</span>)</span>
+            </div>
+            <div class="loc-display">
+                <span id="locCount">0</span> LOC
+            </div>
+            <div class="loc-per-second">
+                <span id="locPerSecond">0</span> LOC/sec
+            </div>
+        </header>
+
+        <!-- Основной контент -->
+        <main class="main-content">
+            <!-- Левая панель - Исследования и достижения -->
+            <aside class="left-panel">
+                <div class="panel research-panel">
+                    <h2>🔬 Research Lab</h2>
+                    <div id="researchList" class="upgrade-list"></div>
+                </div>
+                <div class="panel achievements-panel">
+                    <h2>🏆 Achievements</h2>
+                    <div id="achievementsList" class="achievements-list"></div>
+                </div>
+            </aside>
+
+            <!-- Центральная панель - Кликер -->
+            <section class="center-panel">
+                <div class="clicker-container">
+                    <button id="generateBtn" class="generate-button">
+                        <div class="button-content">
+                            <span class="icon">💻</span>
+                            <span>GENERATE CODE</span>
+                        </div>
+                    </button>
+                    <div id="floatingNumbers" class="floating-numbers"></div>
+                </div>
+                
+                <!-- Прогресс бар до следующего уровня -->
+                <div class="progress-container">
+                    <div class="progress-label">Progress to next level</div>
+                    <div class="progress-bar">
+                        <div id="levelProgress" class="progress-fill"></div>
+                    </div>
+                    <div class="progress-text">
+                        <span id="currentLevelLOC">0</span> / <span id="nextLevelLOC">1000</span> LOC
+                    </div>
+                </div>
+
+                <!-- Статистика -->
+                <div class="stats-container">
+                    <div class="stat-item">
+                        <span>Click Power:</span>
+                        <span id="clickPower">1</span> LOC
+                    </div>
+                    <div class="stat-item">
+                        <span>Total LOC Generated:</span>
+                        <span id="totalLOC">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span>Neural Chips:</span>
+                        <span id="neuralChips">0</span> 🧠
+                    </div>
+                </div>
+            </section>
+
+            <!-- Правая панель - Магазин -->
+            <aside class="right-panel">
+                <div class="panel shop-panel">
+                    <h2>🛒 Upgrade Shop</h2>
+                    <div class="shop-tabs">
+                        <button class="tab-btn active" data-tab="generators">Generators</button>
+                        <button class="tab-btn" data-tab="clicks">Click Upgrades</button>
+                        <button class="tab-btn" data-tab="multipliers">Multipliers</button>
+                    </div>
+                    <div id="shopContent" class="shop-content">
+                        <div id="generatorsTab" class="tab-content active"></div>
+                        <div id="clicksTab" class="tab-content"></div>
+                        <div id="multipliersTab" class="tab-content"></div>
+                    </div>
+                </div>
+                
+                <!-- Кнопка престижа -->
+                <div class="prestige-section">
+                    <button id="prestigeBtn" class="prestige-button" disabled>
+                        ⚡ Singularity Reset
+                    </button>
+                    <div id="prestigeInfo" class="prestige-info"></div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Нижняя панель - Лог событий -->
+        <footer class="bottom-panel">
+            <div class="event-log">
+                <h3>📋 Event Log</h3>
+                <div id="logContainer" class="log-container"></div>
+            </div>
+        </footer>
+
+        <!-- Модальные окна -->
+        <div id="offlineModal" class="modal hidden">
+            <div class="modal-content">
+                <h2>⏰ Welcome Back!</h2>
+                <p id="offlineMessage"></p>
+                <button class="modal-close" onclick="closeModal('offlineModal')">Continue</button>
+            </div>
+        </div>
+
+        <div id="bossModal" class="modal hidden">
+            <div class="modal-content boss-modal">
+                <h2>⚠️ BOSS ENCOUNTER!</h2>
+                <p id="bossMessage"></p>
+                <div class="boss-health">
+                    <div class="health-bar">
+                        <div id="bossHealthBar" class="health-fill"></div>
+                    </div>
+                    <span id="bossHealthText">100%</span>
+                </div>
+                <button id="fightBossBtn" class="fight-boss-btn">FIGHT!</button>
+            </div>
+        </div>
+
+        <div id="achievementModal" class="modal hidden">
+            <div class="modal-content achievement-modal">
+                <h2>🏆 Achievement Unlocked!</h2>
+                <p id="achievementName"></p>
+                <p id="achievementBonus"></p>
+                <button class="modal-close" onclick="closeModal('achievementModal')">Awesome!</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/gameState.js"></script>
+    <script src="js/clicker.js"></script>
+    <script src="js/generators.js"></script>
+    <script src="js/upgrades.js"></script>
+    <script src="js/research.js"></script>
+    <script src="js/achievements.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/bosses.js"></script>
+    <script src="js/prestige.js"></script>
+    <script src="js/saveSystem.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
